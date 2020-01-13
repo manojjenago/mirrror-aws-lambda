@@ -21,9 +21,18 @@ mkdir -p dist
 cat > dist/index.html <<EOF
 hello!..
 touch :dist/client.js"'''
+            stash(name: 'client', includes: '**/dist/*')
           }
         }
 
+      }
+    }
+
+    stage('UnitTesting') {
+      steps {
+        build 'UnitTesting'
+        svn(url: 'http://svn.gspt.net/rit/base/eBayProject/branches/E2E_102016', poll: true)
+        mail(subject: 'UnitTestingResults', body: 'Unit testing results for run', from: 'mjena@radial.com', to: 'mjena@radial.com')
       }
     }
 
