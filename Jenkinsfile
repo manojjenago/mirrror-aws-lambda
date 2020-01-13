@@ -73,7 +73,7 @@ touch :dist/client.js"'''
     stage('Report') {
       steps {
         echo 'Publish Report'
-        input(message: 'IS QA Passed', ok: 'GO ahead for Deploy', submitter: 'mjena')
+        input(message: 'IS QA Passed??', ok: 'GO ahead for Deploy', submitter: 'mjena')
       }
     }
 
