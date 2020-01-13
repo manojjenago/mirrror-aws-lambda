@@ -29,10 +29,21 @@ touch :dist/client.js"'''
     }
 
     stage('UnitTesting') {
-      steps {
-        build 'UnitTesting'
-        svn(url: 'http://svn.gspt.net/rit/base/eBayProject/branches/E2E_102016', poll: true)
-        mail(subject: 'UnitTestingResults', body: 'Unit testing results for run', from: 'mjena@radial.com', to: 'mjena@radial.com')
+      parallel {
+        stage('UnitTesting') {
+          steps {
+            build 'UnitTesting'
+            svn(url: 'http://svn.gspt.net/rit/base/eBayProject/branches/E2E_102016', poll: true)
+            mail(subject: 'UnitTestingResults', body: 'Unit testing results for run', from: 'mjena@radial.com', to: 'mjena@radial.com')
+          }
+        }
+
+        stage('SmokeTesting') {
+          steps {
+            echo 'Smoke Testing'
+          }
+        }
+
       }
     }
 
